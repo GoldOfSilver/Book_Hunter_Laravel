@@ -38,6 +38,11 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
+            // contraite globale pour vérifier l'id et le slug
+                Route::pattern('id', '[1-9][0-9]*'); 
+                Route::pattern('slug', '[a-z0-9]([a-z0-9\-]*[a-z0-9])*');
+            parent::boot();
+
             Route::prefix('api')
                 ->middleware('api')
                 ->namespace($this->namespace)
