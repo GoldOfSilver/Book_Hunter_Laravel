@@ -17,10 +17,22 @@ Route::get('/', function () {
     return view('pages.home');
 })->name('home');
 
-Route::get('/books', function () {
-    return view('books.index');
-})->name('books.index');
+Route::prefix('/books')->name('books.')->group(function () {
+    Route::get('/index', function () {
+        return view('books.index');
+    })->name('index');
 
-Route::get('/authors', function () {
-    return view('authors.index');
-})->name('authors.index');
+    Route::get('/{book}/{slug}', function (\App\Models\Book $book) {
+        return view('books.show', compact('book'));
+    })->name('show');
+});
+
+Route::prefix('/authors')->name('authors.')->group(function () {
+    Route::get('/index', function () {
+        return view('authors.index');
+    })->name('index');
+
+    Route::get('/{author}/{slug}', function (\App\Models\Author $author) {
+        return view('authors.show', compact('author'));
+    })->name('show');
+});
